@@ -6,34 +6,36 @@ Created on Tue Oct 30 20:02:06 2018
 @author: hsantanam
 """
 
+#TSB - Create Class in Python - rocket positions (x,y)
 import matplotlib.pyplot as plt
-import matplotlib.lines as pltl
-# rocket_game is our own module
-import rocket_game as rg
+import simple_module1 as rg
 
-#create an instance of class rocket from module Rocket with x,y=10,5
-rocket_1 = rg.Rocket(10,5)
-#plot on simple graph
-plt.plot(rocket_1.x, rocket_1.y, 'bo', label='line 1', linewidth=2, linestyle='dashed', markersize=12)
-print(rocket_1.x, rocket_1.y)
-#use the move functions from our module to move the rocket up, then left
-#print the new position
-# then plot each new position on the same graph in a different color
+#Make a series of rockets
+rockets=[]
+rockets.append(rg.Rocket())
+rockets.append(rg.Rocket(0,2))
+rockets.append(rg.Rocket(1,4))
+rockets.append(rg.Rocket(2,6))
+rockets.append(rg.Rocket(3,7))
+rockets.append(rg.Rocket(5,9))
+rockets.append(rg.Rocket(8, 15))
 
-rocket_1.move_rocket('up',0,1)
-print(rocket_1.x, rocket_1.y)
-plt.plot(rocket_1.x, rocket_1.y, 'ro', label='line 1', linewidth=2, linestyle='dashed', markersize=12)
+#Show where each rocket is
 
-rocket_1.move_rocket('left', 2,0)
-plt.plot(rocket_1.x, rocket_1.y, 'yo', label='line 1', linewidth=2, linestyle='dashed', markersize=12)
-print(rocket_1.x, rocket_1.y)
+for index, rocket in enumerate(rockets):
+  #original position of rockets
+  print("Rocket %d is at (%d, %d)." % (index, rocket.x, rocket.y))
+  plt.plot(rocket.x, rocket.y, 'rs', linewidth=2, linestyle='dashed', markersize=12)
+  #move the 'rocket' one up
+  rocket.move_up()
+  print("New Rocket position %d is at (%d, %d)." % (index, rocket.x, rocket.y))
+  #plot the new position
+  plt.plot(rocket.x, rocket.y, 'bs', linewidth=2, linestyle='dashed', markersize=12)
+  #move the rocket left
+  rocket.move_left()
+  plt.plot(rocket.x, rocket.y, 'ys', linewidth=2, linestyle='dashed', markersize=12)
 
-#move the rocket down one
-rocket_1.move_rocket('down',0.2)
-
-#create a new instance called rocket_2
-
-rocket_2 = rg.Rocket(5,10)
-#use the get distance function from the module to calculate the distance
-#and print it
-print("distance is: ", rocket_2.get_distance(rocket_1))
+#show graph legend to match colors with position
+plt.title("Positions from using Module")
+plt.gca().legend(('original position','^ - Moved up', '< - Moved left'))
+plt.show()
